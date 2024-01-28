@@ -24,6 +24,7 @@ public class DataManager {
         // Inicialize outras listas conforme necessário
         loadExistingData();
     }
+
     private void loadExistingData() {
         // Carregue dados existentes dos arquivos binários, se houver
         loadVendedores();
@@ -32,6 +33,7 @@ public class DataManager {
         // Carregue outras entidades conforme necessário
     }
 
+    @SuppressWarnings("unchecked")
     private void loadClientes() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH_CLIENTES))) {
             clientes = (List<Cliente>) ois.readObject();
@@ -41,6 +43,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
     public void loadClientesFromJson(String jsonFilePath) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -48,7 +51,8 @@ public class DataManager {
 
             if (jsonFile.exists()) {
                 // Ler clientes do JSON
-                List<Cliente> clientesFromJson = objectMapper.readValue(jsonFile, objectMapper.getTypeFactory().constructCollectionType(List.class, Cliente.class));
+                List<Cliente> clientesFromJson = objectMapper.readValue(jsonFile,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, Cliente.class));
 
                 // Adicionar clientes do JSON à lista se ainda não existirem
                 for (Cliente cliente : clientesFromJson) {
@@ -66,6 +70,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
     // Métodos para adicionar, listar e salvar clientes
     public void addCliente(Cliente cliente) {
         clientes.add(cliente);
@@ -86,6 +91,7 @@ public class DataManager {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void loadVendedores() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH_VENDEDORES))) {
             vendedores = (List<Vendedor>) ois.readObject();
@@ -96,6 +102,7 @@ public class DataManager {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void loadCarros() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH_CARROS))) {
             carros = (List<Carro>) ois.readObject();
@@ -105,9 +112,6 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-    
-
-    // Implemente métodos semelhantes para outras entidades (clientes, vendas, etc.)
 
     public void addVendedor(Vendedor vendedor) {
         vendedores.add(vendedor);
@@ -134,4 +138,3 @@ public class DataManager {
 
     // Outras operações e métodos conforme necessário
 }
-
