@@ -1,6 +1,6 @@
 package com.antonio.vendas;
+
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 public class Cliente implements Serializable {
@@ -8,10 +8,15 @@ public class Cliente implements Serializable {
 
     private String id;
     private String nome;
-    private Instant createdAt;
-    private Instant updatedAt;
+    
+    private String createdAt;
+    private String updatedAt;
 
-    public Cliente(String id, String nome, Instant createdAt, Instant updatedAt) {
+    public Cliente() {
+        
+    }
+
+    public Cliente(String id, String nome, String createdAt, String updatedAt) {
         this.id = id;
         this.nome = nome;
         this.createdAt = createdAt;
@@ -34,19 +39,19 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public Instant getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 

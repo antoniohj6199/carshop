@@ -1,7 +1,6 @@
 package com.antonio.vendas;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 public class Carro implements Serializable {
@@ -14,10 +13,14 @@ public class Carro implements Serializable {
     private String cor;
     private double preco;
     private boolean disponivel;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
-    public Carro(String id, String idCliente, String idVendedor, String modelo, String cor, double preco, boolean disponivel, Instant createdAt, Instant updatedAt) {
+    public Carro(){
+
+    }
+
+    public Carro(String id, String idCliente, String idVendedor, String modelo, String cor, double preco, boolean disponivel, String createdAt, String updatedAt) {
         this.id = id;
         this.idCliente = idCliente;
         this.idVendedor = idVendedor;
@@ -85,19 +88,19 @@ public class Carro implements Serializable {
         this.disponivel = disponivel;
     }
 
-    public Instant getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
