@@ -1,0 +1,6 @@
+[
+    {"id": "1", "nome": "João", "createdAt": "2022-01-28T10:00:00Z", "updatedAt": "2022-01-28T10:00:00Z"},
+    {"id": "2", "nome": "Maria", "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
+    {"id": "3", "nome": "Carlos", "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"}
+  ]
+  

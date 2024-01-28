@@ -1,0 +1,6 @@
+[
+    {"id": "1", "idCliente": "1", "idVendedor": "2", "modelo": "Carro A", "cor": "Azul", "preco": 25000.0, "disponivel": true, "createdAt": "2022-01-28T10:00:00Z", "updatedAt": "2022-01-28T10:00:00Z"},
+    {"id": "2", "idCliente": "2", "idVendedor": "1", "modelo": "Carro B", "cor": "Vermelho", "preco": 30000.0, "disponivel": false, "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
+    {"id": "3", "idCliente": "3", "idVendedor": "3", "modelo": "Carro C", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"}
+  ]
+  
