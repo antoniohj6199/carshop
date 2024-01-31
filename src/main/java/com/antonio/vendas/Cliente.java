@@ -3,17 +3,16 @@ package com.antonio.vendas;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Cliente implements Serializable {
+public class Cliente implements Serializable, Comparable<Cliente> {
     private static final long serialVersionUID = 1L;
 
     private String id;
     private String nome;
-    
     private String createdAt;
     private String updatedAt;
 
     public Cliente() {
-        
+
     }
 
     public Cliente(String id, String nome, String createdAt, String updatedAt) {
@@ -81,5 +80,11 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public int compareTo(Cliente outroCliente) {
+        // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
+        return this.id.compareTo(outroCliente.id);
     }
 }

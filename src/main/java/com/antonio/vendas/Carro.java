@@ -3,7 +3,7 @@ package com.antonio.vendas;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Carro implements Serializable {
+public class Carro implements Serializable, Comparable<Carro> {
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -135,5 +135,11 @@ public class Carro implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public int compareTo(Carro outroCarro) {
+        // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
+        return this.id.compareTo(outroCarro.id);
     }
 }
