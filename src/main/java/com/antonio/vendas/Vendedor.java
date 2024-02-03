@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Vendedor implements Serializable, Comparable<Vendedor> {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private int id;
     private String nome;
     private String createdAt;
     private String updatedAt;
@@ -14,18 +14,18 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
     public Vendedor(){
         
     }
-    public Vendedor(String id, String nome, String createdAt, String updatedAt) {
+    public Vendedor(int id, String nome, String createdAt, String updatedAt) {
         this.id = id;
         this.nome = nome;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -84,6 +84,6 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
     @Override
     public int compareTo(Vendedor outroVendedor) {
         // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
-        return this.id.compareTo(outroVendedor.id);
+        return Integer.compare(this.id, outroVendedor.id);
     }
 }

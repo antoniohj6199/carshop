@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Cliente implements Serializable, Comparable<Cliente> {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private int id;
     private String nome;
     private String createdAt;
     private String updatedAt;
@@ -15,18 +15,18 @@ public class Cliente implements Serializable, Comparable<Cliente> {
 
     }
 
-    public Cliente(String id, String nome, String createdAt, String updatedAt) {
+    public Cliente(int id, String nome, String createdAt, String updatedAt) {
         this.id = id;
         this.nome = nome;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -85,6 +85,6 @@ public class Cliente implements Serializable, Comparable<Cliente> {
     @Override
     public int compareTo(Cliente outroCliente) {
         // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
-        return this.id.compareTo(outroCliente.id);
+        return Integer.compare(this.id, outroCliente.id);
     }
 }

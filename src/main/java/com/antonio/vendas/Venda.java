@@ -8,17 +8,17 @@ public class Venda implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
-    private String idCliente;
-    private String idVendedor;
-    private String idCarro;
+    private String nomeCliente;
+    private String nomeVendedor;
+    private String modeloCarro;
     private double valor;
     private Instant createdAt;
 
-    public Venda(String id, String idCliente, String idVendedor, String idCarro, double valor, Instant createdAt) {
+    public Venda(String id, String nomeCliente, String nomeVendedor, String modeloCarro, double valor, Instant createdAt) {
         this.id = id;
-        this.idCliente = idCliente;
-        this.idVendedor = idVendedor;
-        this.idCarro = idCarro;
+        this.nomeCliente = nomeCliente;
+        this.nomeVendedor = nomeVendedor;
+        this.modeloCarro = modeloCarro;
         this.valor = valor;
         this.createdAt = createdAt;
     }
@@ -32,27 +32,27 @@ public class Venda implements Serializable {
     }
 
     public String getIdCliente() {
-        return idCliente;
+        return nomeCliente;
     }
 
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+    public void setIdCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
 
     public String getIdVendedor() {
-        return idVendedor;
+        return nomeVendedor;
     }
 
-    public void setIdVendedor(String idVendedor) {
-        this.idVendedor = idVendedor;
+    public void setIdVendedor(String nomeVendedor) {
+        this.nomeVendedor = nomeVendedor;
     }
 
     public String getIdCarro() {
-        return idCarro;
+        return modeloCarro;
     }
 
-    public void setIdCarro(String idCarro) {
-        this.idCarro = idCarro;
+    public void setIdCarro(String modeloCarro) {
+        this.modeloCarro = modeloCarro;
     }
 
     public double getValor() {
@@ -77,9 +77,9 @@ public class Venda implements Serializable {
     public String toString() {
         return "Venda{" +
                 "id='" + id + '\'' +
-                ", idCliente='" + idCliente + '\'' +
-                ", idVendedor='" + idVendedor + '\'' +
-                ", idCarro='" + idCarro + '\'' +
+                ", nomeCliente='" + nomeCliente + '\'' +
+                ", nomeVendedor='" + nomeVendedor + '\'' +
+                ", modeloCarro='" + modeloCarro + '\'' +
                 ", valor=" + valor +
                 ", createdAt=" + createdAt +
                 // Outros atributos

@@ -1,33 +1,23 @@
 package com.antonio.vendas;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
-
-import org.w3c.dom.events.MouseEvent;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class ClientesTableModel extends AbstractTableModel {
-    private List<Cliente> clientes;
-    private String[] colunas = { "ID", "Nome", "Criado em", "Atualizado em" };
+public class VendedoresTableModel extends AbstractTableModel {
+    private List<Vendedor> vendedores;
+    private String[] colunas = {"ID", "Nome", "Criado em", "Atualizado em"};
     private boolean ordenacaoCrescenteNome;
-    private boolean ordenacaoCrescenteID;
-    private boolean ordenacaoCrescenteCriacao;
-    private boolean ordenacaoCrescenteAtualizacao;
-    private Comparator<Cliente> comparador;
+    private Comparator<Vendedor> comparador;
 
-    public ClientesTableModel(List<Cliente> clientes) {
-        this.clientes = clientes;
-        this.ordenacaoCrescenteNome = true;
-        this.ordenacaoCrescenteCriacao = true;
-        this.ordenacaoCrescenteAtualizacao = true;
-        this.ordenacaoCrescenteID = true;
+    public VendedoresTableModel(List<Vendedor> vendedores) {
+        this.vendedores = vendedores;
     }
 
     @Override
     public int getRowCount() {
-        return clientes.size();
+        return vendedores.size();
     }
 
     @Override
@@ -42,27 +32,37 @@ public class ClientesTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Cliente cliente = clientes.get(rowIndex);
+        Vendedor vendedor = vendedores.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return cliente.getId();
+                return vendedor.getId();
             case 1:
-                return cliente.getNome();
+                return vendedor.getNome();
             case 2:
-                return cliente.getCreatedAt();
+                return vendedor.getCreatedAt();
             case 3:
-                return cliente.getUpdatedAt();
+                return vendedor.getUpdatedAt();
+            // Adicione mais cases conforme necessário para outras colunas
             default:
                 return null;
         }
     }
-
+    public void addVendedor(Vendedor vendedor) {
+        vendedores.add(vendedor);
+        int rowIndex = vendedores.size() - 1;
+        fireTableRowsInserted(rowIndex, rowIndex);
+    }
+    public void clear() {
+        int rowCount = getRowCount();
+        vendedores.clear();
+        fireTableRowsDeleted(0, rowCount - 1);
+    }
     public void ordenarPorNome(boolean reverte) {
         if (ordenacaoCrescenteNome) {
-            comparador = Comparator.comparing(Cliente::getNome);
+            comparador = Comparator.comparing(Vendedor::getNome);
         } else {
-            comparador = Comparator.comparing(Cliente::getNome).reversed();
+            comparador = Comparator.comparing(Vendedor::getNome).reversed();
         }
         if (reverte){
             ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
@@ -71,9 +71,9 @@ public class ClientesTableModel extends AbstractTableModel {
     }
     public void ordenarPorCriacao(boolean reverte) {
         if (ordenacaoCrescenteNome) {
-            comparador = Comparator.comparing(Cliente::getCreatedAt);
+            comparador = Comparator.comparing(Vendedor::getCreatedAt);
         } else {
-            comparador = Comparator.comparing(Cliente::getCreatedAt).reversed();
+            comparador = Comparator.comparing(Vendedor::getCreatedAt).reversed();
         }
         if (reverte){
             ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
@@ -82,9 +82,9 @@ public class ClientesTableModel extends AbstractTableModel {
     }
     public void ordenarPorModificacao(boolean reverte) {
         if (ordenacaoCrescenteNome) {
-            comparador = Comparator.comparing(Cliente::getUpdatedAt);
+            comparador = Comparator.comparing(Vendedor::getUpdatedAt);
         } else {
-            comparador = Comparator.comparing(Cliente::getUpdatedAt).reversed();
+            comparador = Comparator.comparing(Vendedor::getUpdatedAt).reversed();
         }
         if (reverte){
             ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
@@ -93,36 +93,22 @@ public class ClientesTableModel extends AbstractTableModel {
     }
     public void ordenarPorID(boolean reverte) {
         if (ordenacaoCrescenteNome) {
-            comparador = Comparator.comparingInt(cliente -> cliente.getId());
+            comparador = Comparator.comparingInt(vendedor -> vendedor.getId());
         } else {
-            comparador = Comparator.comparing(Cliente::getId).reversed();
+            comparador = Comparator.comparing(Vendedor::getId).reversed();
         }
         if (reverte){
             ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
         }            
         atualizarTabela();
     }
-
     private void atualizarTabela() {
-        clientes.sort(comparador);
+        vendedores.sort(comparador);
         fireTableDataChanged(); // Notificar a tabela sobre as mudanças nos dados
     }
-
-    public void addCliente(Cliente cliente) {
-        clientes.add(cliente);
-        int rowIndex = clientes.size() - 1;
-        fireTableRowsInserted(rowIndex, rowIndex);
-    }
-
-    public void clear() {
-        int rowCount = getRowCount();
-        clientes.clear();
-        fireTableRowsDeleted(0, rowCount - 1);
-    }
-
-    public void atualizarClientes(List<Cliente> novosClientes, int ordem, boolean reverse) {
-        this.clientes = novosClientes;
-        fireTableDataChanged(); 
+    public void atualizarVendedores(List<Vendedor> novosVendedores, int ordem, boolean reverse) {
+        this.vendedores = novosVendedores;
+        fireTableDataChanged(); // Notifica a tabela sobre a mudança nos dados
         
         if (ordem == 0) {
             ordenarPorID(reverse);
