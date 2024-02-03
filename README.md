@@ -33,6 +33,6 @@ Após a construção bem-sucedida, execute o JAR gerado:
    java -jar target/carshop.jar
    ```
 
-Certifique-se de substituir 'carshop.jar' pelo nome real do JAR gerado.bash	   
+Certifique-se de substituir 'carshop.jar' pelo nome real do JAR gerado.	   
 
 
