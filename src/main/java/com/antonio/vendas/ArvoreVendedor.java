@@ -77,7 +77,7 @@ public class ArvoreVendedor implements Serializable {
     }
 
     private void editarNo(NoArvoreVendedor no, Vendedor vendedor) {
-        int indice = encontrarIndiceChave(no, vendedor.getId());
+        int indice = encontrarIndiceChave(no, vendedor.getId()+"");
 
         if (indice != -1) {
             no.getChaves().set(indice, vendedor);
@@ -106,11 +106,11 @@ public class ArvoreVendedor implements Serializable {
                 no.getChaves().set(indice, chaveSubstituta);
 
                 // Recursivamente excluir a chave substituta na subárvore à direita
-                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId());
+                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId()+"");
             }
         } else if (!no.isFolha()) {
             int i = 0;
-            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
                 i++;
             }
 
@@ -130,10 +130,10 @@ public class ArvoreVendedor implements Serializable {
     // Métodos auxiliares para encontrar índice da chave e chave mínima
     private int encontrarIndiceChave(NoArvoreVendedor no, String id) {
         int i = 0;
-        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
             i++;
         }
-        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId())) ? i : -1;
+        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId()+"")) ? i : -1;
     }
 
     private Vendedor encontrarChaveMinima(NoArvoreVendedor no) {
@@ -237,5 +237,25 @@ public class ArvoreVendedor implements Serializable {
         // Remover o irmão à direita do pai
         pai.getFilhos().remove(indiceFilho + 1);
     }
+    public void atualizarVendedor(Vendedor vendedorAtualizado) {
+        atualizarVendedorRecursivo(raiz, vendedorAtualizado);
+    }
 
+    private void atualizarVendedorRecursivo(NoArvoreVendedor no, Vendedor vendedorAtualizado) {
+        if (no != null) {
+            for (int i = 0; i < no.getChaves().size(); i++) {
+                Vendedor vendedorNo = no.getChaves().get(i);
+                if (vendedorNo.getId() == vendedorAtualizado.getId()) {
+                    // Atualiza os dados do cliente no nó
+                    no.getChaves().set(i, vendedorAtualizado);                    
+                    return;
+                }
+            }
+
+            // Chama o método recursivamente para os filhos do nó
+            for (NoArvoreVendedor filho : no.getFilhos()) {
+                atualizarVendedorRecursivo(filho, vendedorAtualizado);
+            }
+        }
+    }
 }

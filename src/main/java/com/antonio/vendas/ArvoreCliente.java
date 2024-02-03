@@ -77,7 +77,7 @@ public class ArvoreCliente implements Serializable {
     }
 
     private void editarNo(NoArvoreCliente no, Cliente cliente) {
-        int indice = encontrarIndiceChave(no, cliente.getId());
+        int indice = encontrarIndiceChave(no, cliente.getId()+"");
 
         if (indice != -1) {
             no.getChaves().set(indice, cliente);
@@ -106,11 +106,11 @@ public class ArvoreCliente implements Serializable {
                 no.getChaves().set(indice, chaveSubstituta);
 
                 // Recursivamente excluir a chave substituta na subárvore à direita
-                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId());
+                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId()+"");
             }
         } else if (!no.isFolha()) {
             int i = 0;
-            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
                 i++;
             }
 
@@ -130,10 +130,10 @@ public class ArvoreCliente implements Serializable {
     // Métodos auxiliares para encontrar índice da chave e chave mínima
     private int encontrarIndiceChave(NoArvoreCliente no, String id) {
         int i = 0;
-        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
             i++;
         }
-        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId())) ? i : -1;
+        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId()+"")) ? i : -1;
     }
 
     private Cliente encontrarChaveMinima(NoArvoreCliente no) {
@@ -237,5 +237,68 @@ public class ArvoreCliente implements Serializable {
         // Remover o irmão à direita do pai
         pai.getFilhos().remove(indiceFilho + 1);
     }
+    public void atualizarCliente(Cliente clienteAtualizado) {
+        atualizarClienteRecursivo(raiz, clienteAtualizado);
+    }
 
+    private void atualizarClienteRecursivo(NoArvoreCliente no, Cliente clienteAtualizado) {
+        if (no != null) {
+            for (int i = 0; i < no.getChaves().size(); i++) {
+                Cliente clienteNo = no.getChaves().get(i);
+                if (clienteNo.getId() == clienteAtualizado.getId()) {
+                    // Atualiza os dados do cliente no nó
+                    no.getChaves().set(i, clienteAtualizado);                    
+                    return;
+                }
+            }
+
+            // Chama o método recursivamente para os filhos do nó
+            for (NoArvoreCliente filho : no.getFilhos()) {
+                atualizarClienteRecursivo(filho, clienteAtualizado);
+            }
+        }
+    }
+    public void removerCliente(Cliente cliente) {
+
+        raiz = removerRecursivo(raiz, cliente);
+    }
+    private NoArvoreCliente removerRecursivo(NoArvoreCliente no, Cliente cliente) {
+        if (no == null) {
+            return null;
+        }
+    
+        // Encontrar a posição da chave (cliente) na lista de chaves
+        int index = no.getChaves().indexOf(cliente);
+    
+        // Recursivamente remover da subárvore esquerda ou direita
+        if (index == -1) {
+            // Cliente não encontrado na lista de chaves deste nó
+            return no;
+        }
+    
+        no.getChaves().remove(index);
+    
+        if (!no.isFolha()) {
+            // Nó interno, remova o cliente recursivamente da subárvore
+            NoArvoreCliente filho = no.getFilhos().get(index);
+            Cliente substituto = encontrarSubstituto(filho);
+            no.getChaves().add(index, substituto);
+    
+            // Remova o substituto recursivamente na subárvore
+            no.getFilhos().set(index, removerRecursivo(filho, substituto));
+        }
+    
+        return no;
+    }
+    
+    private Cliente encontrarSubstituto(NoArvoreCliente no) {
+        // Encontrar o nó mais à direita na subárvore
+        while (!no.isFolha()) {
+            no = no.getFilhos().get(no.getFilhos().size() - 1);
+        }
+    
+        // Retorna o cliente mais à direita na folha
+        return no.getChaves().get(no.getChaves().size() - 1);
+    }
+    
 }
