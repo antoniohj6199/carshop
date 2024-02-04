@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,11 +34,14 @@ public class VendasGUI extends JFrame {
     private JPanel vendedorPanel;
     private JPanel carroPanel;
     private JPanel vendaPanel;
+    private JPanel relatorioPanel;
 
     private JTable clientesTable;
     private JTable vendedoresTable;
     JTextField buscaTextField;
+    JTextField buscaTextFieldID;
     JTextField buscaTextFieldVendedor;
+    JTextField buscaTextFieldIDVendedor;
     DataManager dataManager;
 
     private int pageSize = 10;
@@ -53,6 +58,7 @@ public class VendasGUI extends JFrame {
         carros = dataManager.getCarros();
         vendas = dataManager.getVendas();
         clientes = dataManager.getClientes();
+
         // Configurações da janela principal
         setTitle("Sistema de Vendas");
         setSize(800, 600);
@@ -64,12 +70,15 @@ public class VendasGUI extends JFrame {
         vendedorPanel = criarVendedorPanel();
         carroPanel = criarCarroPanel();
         vendaPanel = criarVendaPanel();
+        relatorioPanel = criarRelatorioPanel();
         // Adiciona os painéis à janela principal
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Clientes", clientePanel);
         tabbedPane.addTab("Vendedores", vendedorPanel);
         tabbedPane.addTab("Carros", carroPanel);
         tabbedPane.addTab("Vendas", vendaPanel);
+        tabbedPane.addTab("Vendas", vendaPanel);
+        tabbedPane.addTab("Analytics", relatorioPanel);
 
         add(tabbedPane);
     }
@@ -88,6 +97,74 @@ public class VendasGUI extends JFrame {
 
         // Notifica a tabela que os dados foram alterados
         model.fireTableDataChanged();
+    }
+
+    private JPanel criarRelatorioPanel() {
+        JPanel panel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+        panel.setLayout(boxLayout);
+
+        JLabel tituloLabel = new JLabel("Relatório de Vendas");
+        panel.add(tituloLabel);
+
+        int quantidadeTotalVendas = vendas.size();
+        JLabel quantidadeVendasLabel = new JLabel("Quantidade Total de Vendas: " + quantidadeTotalVendas);
+        panel.add(quantidadeVendasLabel);
+
+        double valorTotalVendas = calcularTotalVendas();
+        JLabel totalVendasLabel = new JLabel("Valor Total de Vendas: " + valorTotalVendas);
+        panel.add(totalVendasLabel);
+
+        double mediaValor = calcularMediaValor();
+        JLabel mediaValorLabel = new JLabel("Média de Valor das Vendas: " + mediaValor);
+        panel.add(mediaValorLabel);
+
+        double desvioPadrao = calcularDesvioPadrao();
+        String desvioPadraoFormatado = String.format("%.3f", desvioPadrao);
+        JLabel desvioPadraoLabel = new JLabel("Desvio Padrão de Valor das Vendas: " + desvioPadraoFormatado);
+        panel.add(desvioPadraoLabel);
+
+        return panel;
+    }
+
+    private double calcularTotalVendas() {
+        if (vendas.isEmpty()) {
+            return 0.0;
+        }
+
+        double somaValores = 0.0;
+        for (Venda venda : vendas) {
+            somaValores += venda.getValor();
+        }
+
+        return somaValores;
+    }
+
+    private double calcularMediaValor() {
+        if (vendas.isEmpty()) {
+            return 0.0;
+        }
+
+        double somaValores = 0.0;
+        for (Venda venda : vendas) {
+            somaValores += venda.getValor();
+        }
+
+        return somaValores / vendas.size();
+    }
+
+    private double calcularDesvioPadrao() {
+        double mediaValor = calcularMediaValor();
+
+        double somaQuadradosDiferencas = 0;
+        for (Venda venda : vendas) {
+            double diferenca = venda.getValor() - mediaValor;
+            somaQuadradosDiferencas += diferenca * diferenca;
+        }
+
+        double mediaQuadradosDiferencas = somaQuadradosDiferencas / vendas.size();
+
+        return Math.sqrt(mediaQuadradosDiferencas);
     }
 
     private JPanel criarClientePanel() {
@@ -116,8 +193,28 @@ public class VendasGUI extends JFrame {
         JPanel buscaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel buscaLabel = new JLabel("Buscar Cliente:");
 
+        JLabel buscaIDLabel = new JLabel("Buscar por ID:");
+        buscaTextFieldID = new JTextField(10);
+        buscaTextFieldID.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarClientes(ordem, false);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtrarClientes(ordem, false);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarClientes(ordem, false);
+            }
+        });
         buscaPanel.add(buscaLabel);
         buscaPanel.add(buscaTextField);
+        buscaPanel.add(buscaIDLabel);
+        buscaPanel.add(buscaTextFieldID);
 
         // Adiciona o campo de busca ao painel
         panel.add(buscaPanel, BorderLayout.NORTH);
@@ -148,6 +245,7 @@ public class VendasGUI extends JFrame {
 
         // Criação da tabela de clientes
         clientesTable = new JTable(new ClientesTableModel(new ArrayList<Cliente>()));
+        filtrarClientes(ordem, false);
         JScrollPane scrollPane = new JScrollPane(clientesTable);
         JTableHeader header = clientesTable.getTableHeader();
         header.addMouseListener(new MouseListener() {
@@ -193,7 +291,7 @@ public class VendasGUI extends JFrame {
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CadastroClienteDialog cadastroDialog = new CadastroClienteDialog(VendasGUI.this, dataManager, -1,"");
+                CadastroClienteDialog cadastroDialog = new CadastroClienteDialog(VendasGUI.this, dataManager, -1, "");
                 cadastroDialog.setVisible(true);
                 filtrarClientes(ordem, true);
             }
@@ -207,12 +305,14 @@ public class VendasGUI extends JFrame {
                 if (selectedRow != -1) {
                     Object idS = clientesTable.getValueAt(selectedRow, 0);
                     Object nomeS = clientesTable.getValueAt(selectedRow, 1);
-                    
-                    CadastroClienteDialog cadastroDialog = new CadastroClienteDialog(VendasGUI.this, dataManager, Integer.parseInt((idS+"")), nomeS+"");
+
+                    CadastroClienteDialog cadastroDialog = new CadastroClienteDialog(VendasGUI.this, dataManager,
+                            Integer.parseInt((idS + "")), nomeS + "");
                     cadastroDialog.setVisible(true);
                     filtrarClientes(ordem, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -222,14 +322,16 @@ public class VendasGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = clientesTable.getSelectedRow();
                 if (selectedRow != -1) {
-                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (confirmar == JOptionPane.YES_OPTION) {     
-                        Object idS = clientesTable.getValueAt(selectedRow, 0);                   
-                        excluirCliente(Integer.parseInt(idS+""));
+                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?",
+                            "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (confirmar == JOptionPane.YES_OPTION) {
+                        Object idS = clientesTable.getValueAt(selectedRow, 0);
+                        excluirCliente(Integer.parseInt(idS + ""));
                     }
                     filtrarClientes(ordem, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -245,8 +347,16 @@ public class VendasGUI extends JFrame {
 
     private void filtrarClientes(int ordem, boolean reverse) {
         String termoBusca = buscaTextField.getText().toLowerCase();
-
-        if (termoBusca.length() > 1) {
+        String termoBuscaID = buscaTextFieldID.getText().toLowerCase();
+        if (termoBusca.isEmpty()) {
+            if(termoBuscaID.isEmpty()){
+                termoBusca = "ar";
+            }else{
+                termoBusca = termoBuscaID;
+            }
+            
+        }
+        if (termoBusca.length() > 0) {
             List<Cliente> clientesFiltrados = new ArrayList<>();
 
             // Calcule o índice de início com base na página atual e no tamanho da página
@@ -269,8 +379,16 @@ public class VendasGUI extends JFrame {
 
     private void filtrarVendedores(int ordem, boolean reverse) {
         String termoBusca = buscaTextFieldVendedor.getText().toLowerCase();
-
-        if (termoBusca.length() > 1) {
+        String termoBuscaID = buscaTextFieldIDVendedor.getText().toLowerCase();
+        if (termoBusca.isEmpty()) {
+            if(termoBuscaID.isEmpty()){
+                termoBusca = "ar";
+            }else{
+                termoBusca = termoBuscaID;
+            }
+            
+        }
+        if (termoBusca.length() > 0) {
             List<Vendedor> vendedoresFiltrados = new ArrayList<>();
 
             // Calcule o índice de início com base na página atual e no tamanho da página
@@ -291,7 +409,6 @@ public class VendasGUI extends JFrame {
             // Agora você pode exibir currentPage e totalPages na sua interface do usuário
         }
     }
-    
 
     private void nextPage() {
         paginaAtual++;
@@ -323,12 +440,12 @@ public class VendasGUI extends JFrame {
             // Percorre cada chave no nó atual
             for (Cliente cliente : no.getChaves()) {
                 // Verifica se o nome do cliente contém o termo de busca
-                if (cliente.getNome().toLowerCase().contains(termoBusca)) {
+                if (cliente.getNome().toLowerCase().contains(termoBusca) || (cliente.getId()+"").equals(termoBusca)) {
                     // Adiciona o cliente aos resultados filtrados se atender ao critério de busca
                     if (indice >= startIdx && clientesFiltrados.size() < pageSize) {
-                        if(!clientesFiltrados.contains(cliente)){
+                        if (!clientesFiltrados.contains(cliente)) {
                             clientesFiltrados.add(cliente);
-                        }                        
+                        }
                     }
                     indice++;
                 }
@@ -354,12 +471,12 @@ public class VendasGUI extends JFrame {
             // Percorre cada chave no nó atual
             for (Vendedor vendedor : no.getChaves()) {
                 // Verifica se o nome do cliente contém o termo de busca
-                if (vendedor.getNome().toLowerCase().contains(termoBusca)) {
+                if (vendedor.getNome().toLowerCase().contains(termoBusca)|| (vendedor.getId()+"").equals(termoBusca)) {
                     // Adiciona o cliente aos resultados filtrados se atender ao critério de busca
                     if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
-                        if(!vendedoresFiltrados.contains(vendedor)){
+                        if (!vendedoresFiltrados.contains(vendedor)) {
                             vendedoresFiltrados.add(vendedor);
-                        }                        
+                        }
                     }
                     indice++;
                 }
@@ -402,8 +519,30 @@ public class VendasGUI extends JFrame {
         JPanel buscaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel buscaLabel = new JLabel("Buscar Vendedor:");
 
+        JLabel buscaIDLabel = new JLabel("Buscar por ID:");
+        buscaTextFieldIDVendedor = new JTextField(10);
+        buscaTextFieldIDVendedor.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarVendedores(ordem, false);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtrarVendedores(ordem, false);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarVendedores(ordem, false);
+            }
+        });
+
         buscaPanel.add(buscaLabel);
         buscaPanel.add(buscaTextFieldVendedor);
+
+        buscaPanel.add(buscaIDLabel);
+        buscaPanel.add(buscaTextFieldIDVendedor);
 
         // Adiciona o campo de busca ao painel
         panel.add(buscaPanel, BorderLayout.NORTH);
@@ -434,6 +573,7 @@ public class VendasGUI extends JFrame {
 
         // Criação da tabela de clientes
         vendedoresTable = new JTable(new VendedoresTableModel(new ArrayList<Vendedor>()));
+        filtrarVendedores(ordem, false);
         JScrollPane scrollPane = new JScrollPane(vendedoresTable);
         JTableHeader header = vendedoresTable.getTableHeader();
         header.addMouseListener(new MouseListener() {
@@ -479,7 +619,7 @@ public class VendasGUI extends JFrame {
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CadastroVendedorDialog cadastroDialog = new CadastroVendedorDialog(VendasGUI.this, dataManager, -1,"");
+                CadastroVendedorDialog cadastroDialog = new CadastroVendedorDialog(VendasGUI.this, dataManager, -1, "");
                 cadastroDialog.setVisible(true);
                 filtrarVendedores(ordem, true);
             }
@@ -493,12 +633,14 @@ public class VendasGUI extends JFrame {
                 if (selectedRow != -1) {
                     Object idS = vendedoresTable.getValueAt(selectedRow, 0);
                     Object nomeS = vendedoresTable.getValueAt(selectedRow, 1);
-                    
-                    CadastroVendedorDialog cadastroDialog = new CadastroVendedorDialog(VendasGUI.this, dataManager, Integer.parseInt((idS+"")), nomeS+"");
+
+                    CadastroVendedorDialog cadastroDialog = new CadastroVendedorDialog(VendasGUI.this, dataManager,
+                            Integer.parseInt((idS + "")), nomeS + "");
                     cadastroDialog.setVisible(true);
                     filtrarVendedores(ordem, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -508,14 +650,16 @@ public class VendasGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = vendedoresTable.getSelectedRow();
                 if (selectedRow != -1) {
-                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (confirmar == JOptionPane.YES_OPTION) {     
-                        Object idS = vendedoresTable.getValueAt(selectedRow, 0);                   
-                        excluirVendedor(Integer.parseInt(idS+""));
+                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?",
+                            "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (confirmar == JOptionPane.YES_OPTION) {
+                        Object idS = vendedoresTable.getValueAt(selectedRow, 0);
+                        excluirVendedor(Integer.parseInt(idS + ""));
                     }
                     filtrarVendedores(ordem, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -525,7 +669,7 @@ public class VendasGUI extends JFrame {
         botoesPanel.add(editarButton);
         botoesPanel.add(excluirButton);
         panel.add(botoesPanel, BorderLayout.SOUTH);
- 
+
         return panel;
     }
 
@@ -566,14 +710,16 @@ public class VendasGUI extends JFrame {
                 if (selectedRow != -1) {
                     Object idS = carrosTable.getValueAt(selectedRow, 0);
                     for (Carro carro : carros) {
-                        if(carro.getId() == idS){
-                            CadastroCarroDialog cadastroDialog = new CadastroCarroDialog(VendasGUI.this, dataManager, carro);
+                        if (carro.getId() == idS) {
+                            CadastroCarroDialog cadastroDialog = new CadastroCarroDialog(VendasGUI.this, dataManager,
+                                    carro);
                             cadastroDialog.setVisible(true);
                             carrosTable.setModel(new CarrosTableModel(carros));
                         }
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para editar.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -583,14 +729,16 @@ public class VendasGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = carrosTable.getSelectedRow();
                 if (selectedRow != -1) {
-                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (confirmar == JOptionPane.YES_OPTION) {     
-                        Object idS = carrosTable.getValueAt(selectedRow, 0);                   
-                        excluirCarro(idS+"");
+                    int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza dessa exclusão?",
+                            "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (confirmar == JOptionPane.YES_OPTION) {
+                        Object idS = carrosTable.getValueAt(selectedRow, 0);
+                        excluirCarro(idS + "");
                     }
                     carrosTable.setModel(new CarrosTableModel(carros));
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -614,8 +762,8 @@ public class VendasGUI extends JFrame {
         // Adição dos botões ao painel
         JPanel botoesPanel = new JPanel();
         botoesPanel.add(cadastrarButton);
-       // botoesPanel.add(editarButton);
-        //botoesPanel.add(excluirButton);
+        // botoesPanel.add(editarButton);
+        // botoesPanel.add(excluirButton);
         panel.add(botoesPanel, BorderLayout.SOUTH);
 
         // Adiciona listeners aos botões
@@ -625,6 +773,9 @@ public class VendasGUI extends JFrame {
                 CadastroVendaDialog cadastroDialog = new CadastroVendaDialog(VendasGUI.this, dataManager);
                 cadastroDialog.setVisible(true);
                 vendasTable.setModel(new VendasTableModel(vendas));
+                relatorioPanel = criarRelatorioPanel();
+                repaint();
+                validate();
             }
         });
 
@@ -644,22 +795,5 @@ public class VendasGUI extends JFrame {
     private void excluirCarro(String idCarro) {
         dataManager.excluirCarroID(idCarro);
         System.out.println(idCarro);
-    }
-
-    private void cadastrarVenda() {
-        // Lógica para cadastrar uma nova venda
-        // Exemplo: abrir uma nova janela de cadastro de venda
-        // e, ao finalizar, adicionar a venda à lista e atualizar a tabela
-    }
-
-    private void editarVenda() {
-        // Lógica para editar uma venda selecionada na tabela
-        // Exemplo: abrir uma nova janela de edição de venda
-        // e, ao finalizar, atualizar a venda na lista e na tabela
-    }
-
-    private void excluirVenda() {
-        // Lógica para excluir uma venda selecionada na tabela
-        // Exemplo: remover a venda da lista e atualizar a tabela
     }
 }
