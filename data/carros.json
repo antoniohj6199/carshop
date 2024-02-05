@@ -1,22 +1,18 @@
 [
     {"id": "1", "idCliente": "1", "idVendedor": "2", "modelo": "Honda Civic", "cor": "Azul", "preco": 25000.0, "disponivel": true, "createdAt": "2022-01-28T10:00:00Z", "updatedAt": "2022-01-28T10:00:00Z"},
-    {"id": "2", "idCliente": "2", "idVendedor": "1", "modelo": "Hyundai Creta", "cor": "Vermelho", "preco": 30000.0, "disponivel": false, "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
-    {"id": "3", "idCliente": "2", "idVendedor": "3", "modelo": "Toyota Corolla", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "4", "idCliente": "5", "idVendedor": "2", "modelo": "Honda Fit", "cor": "Preto", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "5", "idCliente": "5", "idVendedor": "1", "modelo": "Jeep Compass", "cor": "Branco", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "6", "idCliente": "4", "idVendedor": "7", "modelo": "Volkswagen Gol", "cor": "Preto", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "7", "idCliente": "2", "idVendedor": "8", "modelo": "Volkswagen Polo", "cor": "Azul", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "2", "idCliente": "2", "idVendedor": "1", "modelo": "Hyundai Creta", "cor": "Vermelho", "preco": 85000.0, "disponivel": false, "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
+    {"id": "3", "idCliente": "2", "idVendedor": "3", "modelo": "Toyota Corolla", "cor": "Verde", "preco": 90000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "4", "idCliente": "5", "idVendedor": "2", "modelo": "Honda Fit", "cor": "Preto", "preco": 45000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "5", "idCliente": "5", "idVendedor": "1", "modelo": "Jeep Compass", "cor": "Branco", "preco": 150000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "6", "idCliente": "4", "idVendedor": "7", "modelo": "Volkswagen Gol", "cor": "Preto", "preco": 25000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "7", "idCliente": "2", "idVendedor": "8", "modelo": "Volkswagen Polo", "cor": "Azul", "preco": 40000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
     {"id": "8", "idCliente": "1", "idVendedor": "9", "modelo": "Fiat Palio", "cor": "Branco", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "9", "idCliente": "11", "idVendedor": "6", "modelo": "Renault Duster", "cor": "Preto", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "10", "idCliente": "8", "idVendedor": "6", "modelo": "Renault Sandero", "cor": "Vermelho", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "11", "idCliente": "8", "idVendedor": "3", "modelo": "Fiat Mobi", "cor": "Branco", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "12", "idCliente": "9", "idVendedor": "3", "modelo": "Peugeot 208", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "13", "idCliente": "10", "idVendedor": "1", "modelo": "Chevrolet Prisma", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "14", "idCliente": "5", "idVendedor": "11", "modelo": "Chevrolet Cruze", "cor": "Cinza", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "15", "idCliente": "3", "idVendedor": "17", "modelo": "Toyota Etios", "cor": "Azul", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"}
-<<<<<<< HEAD
-  ]
-=======
-  ]
+    {"id": "9", "idCliente": "11", "idVendedor": "6", "modelo": "Renault Duster", "cor": "Preto", "preco": 85000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "10", "idCliente": "8", "idVendedor": "6", "modelo": "Renault Sandero", "cor": "Vermelho", "preco": 25000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "11", "idCliente": "8", "idVendedor": "3", "modelo": "Fiat Mobi", "cor": "Branco", "preco": 34000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "12", "idCliente": "9", "idVendedor": "3", "modelo": "Peugeot 208", "cor": "Verde", "preco": 65000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "13", "idCliente": "10", "idVendedor": "1", "modelo": "Chevrolet Prisma", "cor": "Verde", "preco": 25000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "14", "idCliente": "5", "idVendedor": "11", "modelo": "Chevrolet Cruze", "cor": "Cinza", "preco": 95000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "15", "idCliente": "3", "idVendedor": "17", "modelo": "Toyota Etios", "cor": "Azul", "preco": 55000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"}
+]
   
->>>>>>> dad32d0880e948d592ab0c1e258a9d629c6491e4
