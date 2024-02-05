@@ -220,7 +220,7 @@ public class VendasGUI extends JFrame {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                paginaAtual = 1;
+                paginaAtual = 1; 
                 filtrarClientes(ordem, false);
             }
 
