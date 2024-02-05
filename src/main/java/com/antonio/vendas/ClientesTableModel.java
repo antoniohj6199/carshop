@@ -104,6 +104,10 @@ public class ClientesTableModel extends AbstractTableModel {
     }
 
     private void atualizarTabela() {
+        // Quicksort para arrays de valores primitivos e merge sort para arrays de objetos
+        // Alguns casos de teste foi possível notar que é baseado no TimSort
+        // Maioria dos casos é possível notar a complexidade O(n log(n))
+
         clientes.sort(comparador);
         fireTableDataChanged(); // Notificar a tabela sobre as mudanças nos dados
     }
