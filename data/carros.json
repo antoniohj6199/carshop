@@ -13,6 +13,6 @@
     {"id": "12", "idCliente": "9", "idVendedor": "3", "modelo": "Peugeot 208", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
     {"id": "13", "idCliente": "10", "idVendedor": "1", "modelo": "Chevrolet Prisma", "cor": "Verde", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
     {"id": "14", "idCliente": "5", "idVendedor": "11", "modelo": "Chevrolet Cruze", "cor": "Cinza", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
-    {"id": "15", "idCliente": "3", "idVendedor": "17", "modelo": "Toyota Etios", "cor": "Azul", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+    {"id": "15", "idCliente": "3", "idVendedor": "17", "modelo": "Toyota Etios", "cor": "Azul", "preco": 20000.0, "disponivel": true, "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"}
   ]
   
