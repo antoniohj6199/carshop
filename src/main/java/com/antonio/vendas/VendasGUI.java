@@ -131,7 +131,8 @@ public class VendasGUI extends JFrame {
                 quantidadeVendasLabel.setText("Quantidade Total de Vendas: " + vendas.size());
                 totalVendasLabel.setText("Valor Total de Vendas: " + calcularTotalVendas());
                 mediaValorLabel.setText("Média de Valor das Vendas: " + calcularMediaValor());
-                desvioPadraoLabel.setText("Desvio Padrão de Valor das Vendas: " + String.format("%.3f", calcularDesvioPadrao()));
+                desvioPadraoLabel
+                        .setText("Desvio Padrão de Valor das Vendas: " + String.format("%.3f", calcularDesvioPadrao()));
             }
         });
         panel.add(refreshButton);
@@ -361,12 +362,12 @@ public class VendasGUI extends JFrame {
         String termoBusca = buscaTextField.getText().toLowerCase();
         String termoBuscaID = buscaTextFieldID.getText().toLowerCase();
         if (termoBusca.isEmpty()) {
-            if(termoBuscaID.isEmpty()){
-                termoBusca = "ar";
-            }else{
+            if (termoBuscaID.isEmpty()) {
+                termoBusca = "%";
+            } else {
                 termoBusca = termoBuscaID;
             }
-            
+
         }
         if (termoBusca.length() > 0) {
             List<Cliente> clientesFiltrados = new ArrayList<>();
@@ -393,12 +394,12 @@ public class VendasGUI extends JFrame {
         String termoBusca = buscaTextFieldVendedor.getText().toLowerCase();
         String termoBuscaID = buscaTextFieldIDVendedor.getText().toLowerCase();
         if (termoBusca.isEmpty()) {
-            if(termoBuscaID.isEmpty()){
-                termoBusca = "ar";
-            }else{
+            if (termoBuscaID.isEmpty()) {
+                termoBusca = "%";
+            } else {
                 termoBusca = termoBuscaID;
             }
-            
+
         }
         if (termoBusca.length() > 0) {
             List<Vendedor> vendedoresFiltrados = new ArrayList<>();
@@ -451,16 +452,26 @@ public class VendasGUI extends JFrame {
 
             // Percorre cada chave no nó atual
             for (Cliente cliente : no.getChaves()) {
-                // Verifica se o nome do cliente contém o termo de busca
-                if (cliente.getNome().toLowerCase().contains(termoBusca) || (cliente.getId()+"").equals(termoBusca)) {
-                    // Adiciona o cliente aos resultados filtrados se atender ao critério de busca
+                if (termoBusca.equals("%")) {
                     if (indice >= startIdx && clientesFiltrados.size() < pageSize) {
                         if (!clientesFiltrados.contains(cliente)) {
                             clientesFiltrados.add(cliente);
                         }
                     }
-                    indice++;
+                    
+                } else {
+                    if (cliente.getNome().toLowerCase().contains(termoBusca)
+                            || (cliente.getId() + "").equals(termoBusca)) {
+                        // Adiciona o cliente aos resultados filtrados se atender ao critério de busca
+                        if (indice >= startIdx && clientesFiltrados.size() < pageSize) {
+                            if (!clientesFiltrados.contains(cliente)) {
+                                clientesFiltrados.add(cliente);
+                            }
+                        }
+                        
+                    }
                 }
+                indice++;
             }
 
             // Chama o método recursivamente para os filhos do nó
@@ -482,16 +493,25 @@ public class VendasGUI extends JFrame {
 
             // Percorre cada chave no nó atual
             for (Vendedor vendedor : no.getChaves()) {
-                // Verifica se o nome do cliente contém o termo de busca
-                if (vendedor.getNome().toLowerCase().contains(termoBusca)|| (vendedor.getId()+"").equals(termoBusca)) {
-                    // Adiciona o cliente aos resultados filtrados se atender ao critério de busca
+                if (termoBusca.equals("%")) {                    
                     if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
                         if (!vendedoresFiltrados.contains(vendedor)) {
                             vendedoresFiltrados.add(vendedor);
                         }
                     }
-                    indice++;
+                    
+                } else {
+                    if (vendedor.getNome().toLowerCase().contains(termoBusca)
+                            || (vendedor.getId() + "").equals(termoBusca)) {                        
+                        if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
+                            if (!vendedoresFiltrados.contains(vendedor)) {
+                                vendedoresFiltrados.add(vendedor);
+                            }
+                        }
+                        
+                    }
                 }
+                indice++;
             }
 
             // Chama o método recursivamente para os filhos do nó
