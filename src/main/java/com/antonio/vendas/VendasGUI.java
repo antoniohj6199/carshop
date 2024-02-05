@@ -124,6 +124,18 @@ public class VendasGUI extends JFrame {
         JLabel desvioPadraoLabel = new JLabel("Desvio Padrão de Valor das Vendas: " + desvioPadraoFormatado);
         panel.add(desvioPadraoLabel);
 
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quantidadeVendasLabel.setText("Quantidade Total de Vendas: " + vendas.size());
+                totalVendasLabel.setText("Valor Total de Vendas: " + calcularTotalVendas());
+                mediaValorLabel.setText("Média de Valor das Vendas: " + calcularMediaValor());
+                desvioPadraoLabel.setText("Desvio Padrão de Valor das Vendas: " + String.format("%.3f", calcularDesvioPadrao()));
+            }
+        });
+        panel.add(refreshButton);
+
         return panel;
     }
 
