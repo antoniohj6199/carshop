@@ -1,7 +1,7 @@
 [
-    {"id": "1", "nome": "Ana", "createdAt": "2022-01-28T10:00:00Z", "updatedAt": "2022-01-28T10:00:00Z"},
-    {"id": "2", "nome": "Pedro", "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
-    {"id": "3", "nome": "Laura", "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
+  {"id": "1", "nome": "Ana", "createdAt": "2022-01-28T10:00:00Z", "updatedAt": "2022-01-28T10:00:00Z"},
+  {"id": "2", "nome": "Pedro", "createdAt": "2022-01-28T11:00:00Z", "updatedAt": "2022-01-28T11:00:00Z"},
+  {"id": "3", "nome": "Laura", "createdAt": "2022-01-28T12:00:00Z", "updatedAt": "2022-01-28T12:00:00Z"},
   {"id": "4", "nome": "Miguel", "createdAt": "2022-01-28T13:00:00Z", "updatedAt": "2022-01-28T13:00:00Z"},
   {"id": "5", "nome": "Isabella", "createdAt": "2022-01-28T14:00:00Z", "updatedAt": "2022-01-28T14:00:00Z"},
   {"id": "6", "nome": "Gabriel", "createdAt": "2022-01-28T15:00:00Z", "updatedAt": "2022-01-28T15:00:00Z"},
@@ -19,5 +19,5 @@
   {"id": "18", "nome": "Gabriela", "createdAt": "2022-01-29T03:00:00Z", "updatedAt": "2022-01-29T03:00:00Z"},
   {"id": "19", "nome": "Luiz", "createdAt": "2022-01-29T04:00:00Z", "updatedAt": "2022-01-29T04:00:00Z"},
   {"id": "20", "nome": "Alice", "createdAt": "2022-01-29T05:00:00Z", "updatedAt": "2022-01-29T05:00:00Z"}
-  ]
+]
   
