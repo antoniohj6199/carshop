@@ -188,16 +188,19 @@ public class VendasGUI extends JFrame {
         buscaTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
         });
@@ -211,16 +214,19 @@ public class VendasGUI extends JFrame {
         buscaTextFieldID.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+                paginaAtual = 1;
                 filtrarClientes(ordem, false);
             }
         });
@@ -375,9 +381,28 @@ public class VendasGUI extends JFrame {
             // Calcule o índice de início com base na página atual e no tamanho da página
             int startIdx = (paginaAtual - 1) * pageSize;
 
-            // Chama o método na árvore para obter os clientes filtrados com paginação
-            filtrarClientesRecursivo(dataManager.getArvoreCliente().getRaiz(), termoBusca, clientesFiltrados, startIdx,
-                    pageSize);
+            int indice = 0;
+
+            for (Cliente cliente : clientes) {
+                if (termoBusca.equals("%")) {
+                    if (indice >= startIdx && clientesFiltrados.size() < pageSize) {
+                        if (!clientesFiltrados.contains(cliente)) {
+                            clientesFiltrados.add(cliente);
+                        }
+                    }
+                    indice++;
+                } else {
+                    if (cliente.getNome().toLowerCase().contains(termoBusca)
+                            || (String.valueOf(cliente.getId())).equals(termoBusca)) {
+                        if (indice >= startIdx && clientesFiltrados.size() < pageSize) {
+                            if (!clientesFiltrados.contains(cliente)) {
+                                clientesFiltrados.add(cliente);
+                            }
+                        }
+                        indice++;
+                    }
+                }
+            }
 
             // Atualiza o modelo da tabela com os clientes filtrados
             ((ClientesTableModel) clientesTable.getModel()).atualizarClientes(clientesFiltrados, ordem, reverse);
@@ -395,7 +420,8 @@ public class VendasGUI extends JFrame {
         String termoBuscaID = buscaTextFieldIDVendedor.getText().toLowerCase();
         if (termoBusca.isEmpty()) {
             if (termoBuscaID.isEmpty()) {
-                termoBusca = "%";
+                termoBusca = "%";       
+                System.out.println(paginaAtualVendedor);         
             } else {
                 termoBusca = termoBuscaID;
             }
@@ -407,9 +433,28 @@ public class VendasGUI extends JFrame {
             // Calcule o índice de início com base na página atual e no tamanho da página
             int startIdx = (paginaAtualVendedor - 1) * pageSize;
 
-            // Chama o método na árvore para obter os clientes filtrados com paginação
-            filtrarVendedoresRecursivo(dataManager.getArvoreVendedor().getRaiz(), termoBusca, vendedoresFiltrados,
-                    startIdx, pageSize);
+            int indice = 0;
+
+    for (Vendedor vendedor : vendedores) {
+        if (termoBusca.equals("%")) {
+            if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
+                if (!vendedoresFiltrados.contains(vendedor)) {
+                    vendedoresFiltrados.add(vendedor);
+                }
+            }
+            indice++;
+        } else {
+            if (vendedor.getNome().toLowerCase().contains(termoBusca)
+                    || (String.valueOf(vendedor.getId())).equals(termoBusca)) {
+                if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
+                    if (!vendedoresFiltrados.contains(vendedor)) {
+                        vendedoresFiltrados.add(vendedor);
+                    }
+                }
+                indice++;
+            }
+        }
+    }
 
             // Atualiza o modelo da tabela com os clientes filtrados
             ((VendedoresTableModel) vendedoresTable.getModel()).atualizarVendedores(vendedoresFiltrados, ordem,
@@ -489,14 +534,19 @@ public class VendasGUI extends JFrame {
         // Se o nó não é nulo
         if (no != null) {
             int indice = 0;
-
+           // startIdx = (paginaAtualVendedor - 1) * pageSize;
             // Percorre cada chave no nó atual
             for (Vendedor vendedor : no.getChaves()) {
                 if (termoBusca.equals("%")) {                    
                     if (indice >= startIdx && vendedoresFiltrados.size() < pageSize) {
                         if (!vendedoresFiltrados.contains(vendedor)) {
                             vendedoresFiltrados.add(vendedor);
+                            indice++;
                         }
+                        System.out.println("opas"+startIdx);
+                    }else{
+                        indice++;
+                        System.out.println("opa"+indice+" "+startIdx+" "+pageSize);
                     }
                     
                 } else {
@@ -510,7 +560,7 @@ public class VendasGUI extends JFrame {
                         
                     }
                 }
-                indice++;
+                
             }
 
             // Chama o método recursivamente para os filhos do nó
@@ -532,16 +582,19 @@ public class VendasGUI extends JFrame {
         buscaTextFieldVendedor.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
         });
@@ -555,16 +608,19 @@ public class VendasGUI extends JFrame {
         buscaTextFieldIDVendedor.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+                paginaAtualVendedor = 1;
                 filtrarVendedores(ordem, false);
             }
         });
