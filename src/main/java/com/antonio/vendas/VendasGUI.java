@@ -405,7 +405,7 @@ public class VendasGUI extends JFrame {
             List<Vendedor> vendedoresFiltrados = new ArrayList<>();
 
             // Calcule o índice de início com base na página atual e no tamanho da página
-            int startIdx = (paginaAtual - 1) * pageSize;
+            int startIdx = (paginaAtualVendedor - 1) * pageSize;
 
             // Chama o método na árvore para obter os clientes filtrados com paginação
             filtrarVendedoresRecursivo(dataManager.getArvoreVendedor().getRaiz(), termoBusca, vendedoresFiltrados,
@@ -418,7 +418,7 @@ public class VendasGUI extends JFrame {
             // Exiba as informações de paginação (por exemplo, página atual e número total
             // de páginas)
             int totalPages = (int) Math.ceil((double) vendedoresFiltrados.size() / pageSize);
-            int currentPage = Math.min(paginaAtual, totalPages);
+            int currentPage = Math.min(paginaAtualVendedor, totalPages);
             // Agora você pode exibir currentPage e totalPages na sua interface do usuário
         }
     }
@@ -457,8 +457,7 @@ public class VendasGUI extends JFrame {
                         if (!clientesFiltrados.contains(cliente)) {
                             clientesFiltrados.add(cliente);
                         }
-                    }
-                    
+                    }                    
                 } else {
                     if (cliente.getNome().toLowerCase().contains(termoBusca)
                             || (cliente.getId() + "").equals(termoBusca)) {
