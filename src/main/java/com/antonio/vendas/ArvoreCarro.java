@@ -9,7 +9,7 @@ public class ArvoreCarro implements Serializable {
     private NoArvoreCarro raiz;
     private int grau;
 
-    public ArvoreCarro(int grau) {
+    public ArvoreCarro(int grau) { 
         this.raiz = null;
         this.grau = grau;
     }
