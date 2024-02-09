@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArvoreCarro implements Serializable {
+public class ArvoreCarro implements Serializable { 
 
     private NoArvoreCarro raiz;
     private int grau;
