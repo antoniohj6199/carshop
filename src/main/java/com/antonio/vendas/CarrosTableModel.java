@@ -64,12 +64,21 @@ public class CarrosTableModel extends AbstractTableModel {
         if (ordem == 0) {
             ordenarPorID(reverse);
         }else if (ordem == 1) {
-            ordenarPorModelo(reverse);
+            ordenarPorIDCliente(reverse);
         }
         else if (ordem == 2) {
-            ordenarPorModelo(reverse);
+            ordenarPorIDVendedor(reverse);
         }else if (ordem == 3) {
             ordenarPorModelo(reverse);
+        }
+        else if (ordem == 3) {
+            ordenarPorCor(reverse);
+        }
+        else if (ordem == 3) {
+            ordenarPorPreco(reverse);
+        }
+        else if (ordem == 3) {
+            ordenarPorDisponivel(reverse);
         }
     }
     public void ordenarPorID(boolean reverte) {
@@ -83,11 +92,66 @@ public class CarrosTableModel extends AbstractTableModel {
         }            
         atualizarTabela();
     }
+    public void ordenarPorIDCliente(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(carro -> carro.getIdCliente());
+        } else {
+            comparador = Comparator.comparing(Carro::getIdCliente).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    public void ordenarPorIDVendedor(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(carro -> carro.getIdVendedor());
+        } else {
+            comparador = Comparator.comparing(Carro::getIdVendedor).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
     public void ordenarPorModelo(boolean reverte) {
         if (ordenacaoCrescenteNome) {
             comparador = Comparator.comparing(Carro::getModelo);
         } else {
             comparador = Comparator.comparing(Carro::getModelo).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    public void ordenarPorDisponivel(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(Carro::isDisponivel);
+        } else {
+            comparador = Comparator.comparing(Carro::isDisponivel).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    public void ordenarPorPreco(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(Carro::getPreco);
+        } else {
+            comparador = Comparator.comparing(Carro::getPreco).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    public void ordenarPorCor(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(Carro::getCor);
+        } else {
+            comparador = Comparator.comparing(Carro::getCor).reversed();
         }
         if (reverte){
             ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
