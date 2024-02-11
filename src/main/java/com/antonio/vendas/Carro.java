@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Carro implements Serializable, Comparable<Carro> {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private int id;
     private String idCliente;
     private String idVendedor;
     private String modelo;
@@ -20,7 +20,7 @@ public class Carro implements Serializable, Comparable<Carro> {
 
     }
 
-    public Carro(String id, String idCliente, String idVendedor, String modelo, String cor, double preco, boolean disponivel, String createdAt, String updatedAt) {
+    public Carro(int id, String idCliente, String idVendedor, String modelo, String cor, double preco, boolean disponivel, String createdAt, String updatedAt) {
         this.id = id;
         this.idCliente = idCliente;
         this.idVendedor = idVendedor;
@@ -32,11 +32,11 @@ public class Carro implements Serializable, Comparable<Carro> {
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -139,7 +139,6 @@ public class Carro implements Serializable, Comparable<Carro> {
 
     @Override
     public int compareTo(Carro outroCarro) {
-        // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
-        return this.id.compareTo(outroCarro.id);
+        return Integer.compare(this.id, outroCarro.id);
     }
 }

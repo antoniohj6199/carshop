@@ -170,6 +170,9 @@ public class DataManager {
     public ArvoreCliente getArvoreCliente() {
         return this.arvoreClientes;
     }
+    public ArvoreCarro getArvoreCarro() {
+        return this.arvoreCarros;
+    }
 
     public ArvoreVendedor getArvoreVendedor() {
         return this.arvoreVendedores;
@@ -248,8 +251,8 @@ public class DataManager {
         int maiorID = Integer.MIN_VALUE;
 
         for (Carro carro : carros) {
-            if (Integer.parseInt(carro.getId()) > maiorID) {
-                maiorID = Integer.parseInt(carro.getId());
+            if (carro.getId() > maiorID) {
+                maiorID = carro.getId();
             }
         }
 
@@ -299,9 +302,9 @@ public class DataManager {
         }
     }
 
-    public void excluirCarroID(String idCarro) {
+    public void excluirCarroID(int idCarro) {
         for (Carro carro : carros) {
-            if (carro.getId().equals(idCarro)) {
+            if (carro.getId() == idCarro) {
                 excluirCarro(carro);
                 return;
             }
@@ -458,12 +461,12 @@ public class DataManager {
 
     public void addCarro(Carro carro) {
         // System.out.println("achou "+carro.getId());
-        if (Integer.parseInt(carro.getId()) <= 0) {
-            carro.setId((encontrarMaiorIDCarro() + 1) + "");
+        if (carro.getId() <= 0) {
+            carro.setId((encontrarMaiorIDCarro() + 1));
             carros.add(carro);
         } else {
             for (Carro carroExistente : carros) {
-                if (carroExistente.getId().equals(carro.getId())) {
+                if (carroExistente.getId() == carro.getId()) {
                     carroExistente.setCor(carro.getCor());
                     carroExistente.setCreatedAt(obterDataAtualFormatada());
                     carroExistente.setDisponivel(carro.isDisponivel());

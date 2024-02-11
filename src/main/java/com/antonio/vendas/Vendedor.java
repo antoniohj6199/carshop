@@ -53,7 +53,6 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
         this.updatedAt = updatedAt;
     }
 
-    // Outros métodos conforme necessário
 
     @Override
     public String toString() {
@@ -83,7 +82,6 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
     
     @Override
     public int compareTo(Vendedor outroVendedor) {
-        // Implemente a lógica de comparação, geralmente baseada no ID ou em outro critério relevante
         return Integer.compare(this.id, outroVendedor.id);
     }
 }

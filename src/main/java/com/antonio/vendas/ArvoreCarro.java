@@ -4,18 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArvoreCarro implements Serializable { 
+public class ArvoreCarro implements Serializable {
 
     private NoArvoreCarro raiz;
     private int grau;
 
-    public ArvoreCarro(int grau) { 
+    public ArvoreCarro(int grau) {
         this.raiz = null;
         this.grau = grau;
     }
+
     public NoArvoreCarro getRaiz() {
         return raiz;
     }
+
     public void inserir(Carro carro) {
         if (raiz == null) {
             raiz = new NoArvoreCarro(grau, true);
@@ -77,7 +79,7 @@ public class ArvoreCarro implements Serializable {
     }
 
     private void editarNo(NoArvoreCarro no, Carro carro) {
-        int indice = encontrarIndiceChave(no, carro.getId());
+        int indice = encontrarIndiceChave(no, carro.getId()+"");
 
         if (indice != -1) {
             no.getChaves().set(indice, carro);
@@ -106,11 +108,11 @@ public class ArvoreCarro implements Serializable {
                 no.getChaves().set(indice, chaveSubstituta);
 
                 // Recursivamente excluir a chave substituta na subárvore à direita
-                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId());
+                excluirNo(no.getFilhos().get(indice + 1), chaveSubstituta.getId()+"");
             }
         } else if (!no.isFolha()) {
             int i = 0;
-            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+            while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
                 i++;
             }
 
@@ -130,10 +132,10 @@ public class ArvoreCarro implements Serializable {
     // Métodos auxiliares para encontrar índice da chave e chave mínima
     private int encontrarIndiceChave(NoArvoreCarro no, String id) {
         int i = 0;
-        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()) > 0) {
+        while (i < no.getChaves().size() && id.compareTo(no.getChaves().get(i).getId()+"") > 0) {
             i++;
         }
-        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId())) ? i : -1;
+        return (i < no.getChaves().size() && id.equals(no.getChaves().get(i).getId()+"")) ? i : -1;
     }
 
     private Carro encontrarChaveMinima(NoArvoreCarro no) {

@@ -43,7 +43,6 @@ public class VendasTableModel extends AbstractTableModel {
                 return venda.getValor();
             case 5:
                 return venda.getCreatedAt();
-            // Adicione mais cases conforme necessário para outras colunas
             default:
                 return null;
         }

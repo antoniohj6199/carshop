@@ -43,7 +43,7 @@ public class CadastroCarroDialog extends JDialog {
         disponivelCheckBox = new JCheckBox();
         idTextField.setText("-1");
         if(carro != null){
-            idTextField.setText(carro.getId());
+            idTextField.setText(carro.getId()+"");
             idClienteTextField.setText(carro.getIdCliente());
             idVendedorTextField.setText(carro.getIdVendedor());
             modeloTextField.setText(carro.getModelo());
@@ -113,7 +113,7 @@ public class CadastroCarroDialog extends JDialog {
                 boolean disponivel = disponivelCheckBox.isSelected();
 
                 // Crie um objeto Carro com os valores
-                Carro novoCarro = new Carro(id, idCliente, idVendedor, modelo, cor, preco, disponivel,
+                Carro novoCarro = new Carro(Integer.parseInt(id), idCliente, idVendedor, modelo, cor, preco, disponivel,
                         obterDataAtualFormatada(), obterDataAtualFormatada());
 
                 // Adicione o novo carro ao DataManager

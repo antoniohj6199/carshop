@@ -42,8 +42,7 @@ public class VendedoresTableModel extends AbstractTableModel {
             case 2:
                 return vendedor.getCreatedAt();
             case 3:
-                return vendedor.getUpdatedAt();
-            // Adicione mais cases conforme necessário para outras colunas
+                return vendedor.getUpdatedAt();            
             default:
                 return null;
         }
@@ -103,16 +102,12 @@ public class VendedoresTableModel extends AbstractTableModel {
         atualizarTabela();
     }
     private void atualizarTabela() {
-        // Quicksort para arrays de valores primitivos e merge sort para arrays de objetos
-        // Alguns casos de teste foi possível notar que é baseado no TimSort
-        // Maioria dos casos é possível notar a complexidade O(n log(n))
-
         vendedores.sort(comparador);
-        fireTableDataChanged(); // Notificar a tabela sobre as mudanças nos dados
+        fireTableDataChanged(); 
     }
     public void atualizarVendedores(List<Vendedor> novosVendedores, int ordem, boolean reverse) {
         this.vendedores = novosVendedores;
-        fireTableDataChanged(); // Notifica a tabela sobre a mudança nos dados
+        fireTableDataChanged(); 
         
         if (ordem == 0) {
             ordenarPorID(reverse);

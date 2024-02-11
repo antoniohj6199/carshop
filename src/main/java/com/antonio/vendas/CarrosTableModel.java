@@ -1,12 +1,15 @@
 package com.antonio.vendas;
 
 import javax.swing.table.AbstractTableModel;
+
+import java.util.Comparator;
 import java.util.List;
 
 public class CarrosTableModel extends AbstractTableModel {
     private List<Carro> carros;
     private String[] colunas = {"ID", "ID Cliente", "ID Vendedor", "Modelo", "Cor", "Preço", "Disponível", "Criado em", "Atualizado em"};
-
+    private boolean ordenacaoCrescenteNome;
+    private Comparator<Carro> comparador;
     public CarrosTableModel(List<Carro> carros) {
         this.carros = carros;
     }
@@ -53,5 +56,46 @@ public class CarrosTableModel extends AbstractTableModel {
             default:
                 return null;
         }
+    }
+    public void atualizarCarros(List<Carro> novosCarros, int ordem, boolean reverse) {
+        this.carros = novosCarros;
+        fireTableDataChanged(); 
+        
+        if (ordem == 0) {
+            ordenarPorID(reverse);
+        }else if (ordem == 1) {
+            ordenarPorModelo(reverse);
+        }
+        else if (ordem == 2) {
+            ordenarPorModelo(reverse);
+        }else if (ordem == 3) {
+            ordenarPorModelo(reverse);
+        }
+    }
+    public void ordenarPorID(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(carro -> carro.getId());
+        } else {
+            comparador = Comparator.comparing(Carro::getId).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    public void ordenarPorModelo(boolean reverte) {
+        if (ordenacaoCrescenteNome) {
+            comparador = Comparator.comparing(Carro::getModelo);
+        } else {
+            comparador = Comparator.comparing(Carro::getModelo).reversed();
+        }
+        if (reverte){
+            ordenacaoCrescenteNome = !ordenacaoCrescenteNome;
+        }            
+        atualizarTabela();
+    }
+    private void atualizarTabela() {
+        carros.sort(comparador);
+        fireTableDataChanged(); 
     }
 }
